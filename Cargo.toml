@@ -6,5 +6,7 @@ authors = ["neodc <noe@lal.be>"]
 [dependencies]
 mpd = { git = "https://github.com/neodc/rust-mpd.git", branch = "add-stickers_map" }
 rand = "0.5.0-pre.0"
-config = "0.8.0"
-xdg = "2.1.0"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+lazy_static = "1.0"

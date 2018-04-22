@@ -1,0 +1,54 @@
+{
+	"url": "exemple.com:6600",
+	"password": "",
+	"playlist_len": 16,
+	"keep_before": 7,
+	"score_compute": [
+		{
+			"action": "add",
+			"value": {
+				"type": "now"
+			}
+		},
+		{
+			"action": "sub",
+			"value": {
+				"type": "sticker",
+				"name": "time",
+				"default": {
+					"value": {
+						"type": "now"
+					},
+					"saved": true
+				}
+			}
+		},
+		{
+			"action": "pow",
+			"value": {
+				"type": "const",
+				"value": 2
+			}
+		},
+		{
+			"action": "mul",
+			"condition": {
+				"type": "sticker_exist",
+				"name": "fav"
+			},
+			"value": {
+				"type": "const",
+				"value": 5
+			}
+		}
+	],
+	"actions": [
+		{
+			"type": "sticker_update",
+			"name": "time",
+			"value": {
+				"type": "now"
+			}
+		}
+	]
+}
