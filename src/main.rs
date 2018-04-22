@@ -48,12 +48,10 @@ fn add_music(conn: &mut Client, nb: u32) {
 		.unwrap()
 		.into_iter()
 		.map(|file_path| {
-			get_stickers(conn, &file_path)
-				.map(|stickers| get_score(conn, &file_path, now, &stickers))
-				.map(|score| (file_path, score))
+			let score = get_score(conn, &file_path, now);
+
+			Weighted{item: file_path, weight: score}
 		})
-		.filter_map(Result::ok)
-		.map(|(item, weight)| Weighted{item, weight})
 		.collect();
 
 	let mut rng = WeightedChoice::new(list);
@@ -84,7 +82,9 @@ fn get_stickers(conn: &mut Client, file_path: &str) -> Result<HashMap<String, St
 		.map_err(|_| ())
 }
 
-fn get_score(conn: &mut Client, file_path: &str, now: u64, stickers: &HashMap<String, String>) -> u64 {
+fn get_score(conn: &mut Client, file_path: &str, now: u64) -> u64 {
+
+	let stickers: HashMap<String, String> = get_stickers(conn, file_path).unwrap_or_default();
 
 	let time: u64 = stickers.get(STICKER_TIME)
 		.and_then(|time| time.parse().ok())
